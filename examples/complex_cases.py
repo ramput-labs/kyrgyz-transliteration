@@ -12,7 +12,6 @@ ASCII spellings, custom vocabulary, and extended ASCII output.
 from __future__ import annotations
 
 from kyrgyz_transliteration import (
-    Wordlist,
     ascii_key,
     builtin_wordlist,
     detect_script,

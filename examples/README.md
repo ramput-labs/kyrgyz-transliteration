@@ -19,11 +19,10 @@ The main implementation is in [`basic.py`](./basic.py). It demonstrates:
 
 - Kyrgyz Cyrillic to ASCII English transliteration with `to_latin`;
 - English transliteration back to Kyrgyz with `to_cyrillic`;
-- `english_ascii` output using the natural `ө` → `o` spelling;
 - natural English output such as `Өмүр бою...` → `Omur boyu...`;
 - automatic direction detection with `transliterate`;
 - script detection and URL-safe slugs;
-- an intentionally lossy `english` example using `Конституциясы`.
+- a genuinely lossy case: the homographs `көл`/`кол` are both `kol`.
 
 For deeper cases, run [`complex_cases.py`](./complex_cases.py):
 
@@ -33,8 +32,8 @@ python -m examples.complex_cases
 
 It covers inflected words such as `dongolokton`, compound phrases, punctuation
 and capitalization, ambiguous spellings with and without the dictionary,
-custom domain vocabulary, extended ASCII output, and mixed automatic
-direction workflows.
+custom domain vocabulary, the `english_ascii` scheme (`ж` → `zh`), and mixed
+automatic direction workflows.
 
 For especially dense Kyrgyz text, run
 [`very_complex_cases.py`](./very_complex_cases.py):
@@ -43,9 +42,9 @@ For especially dense Kyrgyz text, run
 python -m examples.very_complex_cases
 ```
 
-It uses words and sentences with repeated `ң`, `ү`, and `ө`, compares the
-dictionary-assisted English output with exact `bgn` output, and demonstrates
-adding an inflected form to a copied custom wordlist.
+It uses words and sentences with repeated `ң`, `ү`, and `ө`, shows the legacy
+`bgn` alias next to the default scheme, and demonstrates adding an inflected
+form to a copied custom wordlist.
 
 For the supplied personal sentence cases, run
 [`custom_cases.py`](./custom_cases.py):
@@ -57,10 +56,12 @@ python -m examples.custom_cases
 It demonstrates names, punctuation, questions, and application-specific
 vocabulary added to a copied `Wordlist`.
 
-The default `english` scheme is designed for keyboards, URLs, filenames, and
-messengers, so several Kyrgyz Cyrillic letters share ASCII spellings. Use
-`scheme="english_ascii"` when you want ASCII output with `ө` → `o`, `ң` → `n`,
-and `ү` → `u`. The legacy `bgn` name is also ASCII-only for compatibility.
+Schemes: the default `english` scheme is designed for keyboards, URLs,
+filenames, and messengers, so `ө`, `ү`, `ң` share ASCII spellings with `о`,
+`у`, `н` and are restored from the dictionary. `english_ascii` differs only by
+`ж` → `zh`. `passport` reproduces the ICAO Doc 9303 table used in Kyrgyz
+passports (`й` → `i`, `ю` → `iu`, `я` → `ia`), and `bgn_ascii` is BGN/PCGN 1979
+in plain `a-z` (`ң` → `ng`). The legacy `bgn` name is an alias of `english`.
 Even with the default dictionary, uncommon words and unfamiliar inflections may
 need a custom [`Wordlist`](../README.md#свой-список-слов).
 
@@ -68,6 +69,7 @@ The same operations are available from the installed CLI:
 
 ```bash
 kyrgyz-transliteration "дөңгөлөк"
-kyrgyz-transliteration -s english_ascii "Өмүр бою Кыргызстанды сагынам"
+kyrgyz-transliteration -s passport "Айгүл Жумагулова"
 kyrgyz-transliteration -d cyrillic "okmottun jangy dongologu"
+kyrgyz-transliteration -i text.txt -o text-latin.txt
 ```

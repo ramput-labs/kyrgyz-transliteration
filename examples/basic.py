@@ -76,14 +76,15 @@ def show_convenience_helpers() -> None:
 
 def show_lossy_edge_case() -> None:
     """Make the default scheme's deliberate ambiguity visible."""
-    text = "Кыргыз Республикасынын Конституциясы"
+    text = "Ысык-Көлдүн көлү, Чүйдүн колу"  # көл (lake) and кол (hand) are both "kol"
     latin = to_latin(text)
     restored = to_cyrillic(latin)
     print("\nImportant: English ASCII transliteration is not always reversible")
     print(f"  original:  {text}")
     print(f"  latin:     {latin}")
     print(f"  restored:  {restored}")
-    print("  ASCII transliteration is intentionally lossy; use a wordlist for restoration.")
+    print("  True homographs (кол/көл, он/оң) cannot be told apart: the dictionary picks")
+    print("  the more frequent reading. Everything else in the built-in lists round-trips.")
 
 
 def main() -> None:

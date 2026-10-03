@@ -31,7 +31,7 @@ WORDS = [
 
 
 def test_library_speaks_english_only():
-    assert sorted(SCHEMES) == ["bgn", "english", "english_ascii"]
+    assert sorted(SCHEMES) == ["bgn", "bgn_ascii", "english", "english_ascii", "passport"]
     for scheme in SCHEMES.values():
         latin = "".join(scheme.mapping.values())
         assert latin.isascii()
@@ -132,7 +132,9 @@ def test_single_letter_word_is_capitalized_not_shouted():
 
 def test_soft_and_hard_signs_are_dropped_in_english():
     assert to_latin("альбом") == "albom"
-    assert to_latin("подъезд") == "podezd"
+    assert to_latin("семья") == "semya"
+    # ...кроме позиции перед «е», где они обозначают йотацию: podyezd, а не podezd.
+    assert to_latin("подъезд") == "podyezd"
 
 
 def test_digraphs_win_over_single_letters():

@@ -87,10 +87,10 @@ def test_wordlist_file_marks_preferred_with_a_star(tmp_path):
 
 
 def test_copy_is_independent_and_keeps_preferences():
-    twin = builtin_wordlist().copy().add(["көпөлөк"])
-    assert twin.lookup("kopolok") == "көпөлөк"
+    twin = builtin_wordlist().copy().add(["көгүчкөн"])
+    assert twin.lookup("koguchkon") == "көгүчкөн"
     assert twin.lookup("uy") == "үй"
-    assert "kopolok" not in builtin_wordlist()
+    assert "koguchkon" not in builtin_wordlist()
 
 
 def test_merge_carries_preferred_words_over():
@@ -229,6 +229,6 @@ def test_transliterate_passes_wordlist_only_to_cyrillic():
 
 
 def test_wordlist_can_be_extended():
-    words = builtin_wordlist().copy().add(["көпөлөк"])
-    assert restore_words("kopolokton", words) == "көпөлөктөн"
-    assert "kopolok" not in builtin_wordlist()
+    words = builtin_wordlist().copy().add(["көгүчкөн"])
+    assert restore_words("koguchkondon", words) == "көгүчкөндөн"
+    assert "koguchkon" not in builtin_wordlist()
